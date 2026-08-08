@@ -1,0 +1,14 @@
+{
+  "name": "ip2location-smart-geolocator",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A clean IP geolocation dashboard powered by IP2Location.io.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}
