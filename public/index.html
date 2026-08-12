@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GeoLens - IP2Location Smart Geolocator</title>
+</head>
+<body>
+  <h1>GeoLens</h1>
+  <p>IP2Location Smart Geolocator</p>
+
+  <input id="ip" placeholder="Enter IP address">
+  <button onclick="lookup()">Lookup</button>
+
+  <pre id="result"></pre>
+
+  <script>
+    async function lookup() {
+      const ip = document.getElementById("ip").value;
+      const result = document.getElementById("result");
+
+      result.textContent = "Loading...";
+
+      try {
+        const response = await fetch(
+          "/api/lookup?ip=" + encodeURIComponent(ip)
+        );
+
+        const data = await response.json();
+        result.textContent = JSON.stringify(data, null, 2);
+      } catch (error) {
+        result.textContent = "Error: " + error.message;
+      }
+    }
+  </script>
+</body>
+</html>
