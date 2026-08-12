@@ -3,35 +3,381 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GeoLens - IP2Location Smart Geolocator</title>
+
+  <title>GeoLens - IP Geolocator</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      min-height: 100vh;
+      background: #0b1220;
+      color: #fff;
+      padding: 25px 15px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 850px;
+      margin: auto;
+    }
+
+    .header {
+      text-align: center;
+      margin: 25px 0 30px;
+    }
+
+    .logo {
+      width: 70px;
+      height: 70px;
+      margin: auto;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 34px;
+      background: linear-gradient(135deg, #00d4ff, #0066ff);
+      box-shadow: 0 10px 35px rgba(0, 153, 255, 0.35);
+    }
+
+    h1 {
+      margin-top: 18px;
+      font-size: 38px;
+      letter-spacing: 1px;
+    }
+
+    .subtitle {
+      color: #9ca9bd;
+      margin-top: 8px;
+      font-size: 15px;
+    }
+
+    .search-box {
+      background: #121c2e;
+      padding: 18px;
+      border-radius: 18px;
+      border: 1px solid #26344b;
+      display: flex;
+      gap: 10px;
+      margin-bottom: 25px;
+    }
+
+    #ip {
+      flex: 1;
+      min-width: 0;
+      padding: 15px;
+      border-radius: 12px;
+      border: 1px solid #34445e;
+      background: #0b1220;
+      color: white;
+      font-size: 16px;
+      outline: none;
+    }
+
+    #ip:focus {
+      border-color: #00bfff;
+    }
+
+    button {
+      border: none;
+      padding: 0 23px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #00bfff, #0066ff);
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:active {
+      transform: scale(0.97);
+    }
+
+    #status {
+      text-align: center;
+      color: #9ca9bd;
+      margin: 15px 0;
+    }
+
+    .dashboard {
+      display: none;
+    }
+
+    .ip-card {
+      background: linear-gradient(135deg, #14243c, #101a2c);
+      border: 1px solid #2c405d;
+      border-radius: 20px;
+      padding: 25px;
+      margin-bottom: 18px;
+    }
+
+    .ip-label {
+      color: #8fa1bb;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .ip-value {
+      font-size: 30px;
+      font-weight: bold;
+      margin-top: 8px;
+      word-break: break-word;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+
+    .card {
+      background: #121c2e;
+      border: 1px solid #26344b;
+      border-radius: 16px;
+      padding: 18px;
+    }
+
+    .card-title {
+      color: #8fa1bb;
+      font-size: 13px;
+      margin-bottom: 9px;
+    }
+
+    .card-value {
+      font-size: 17px;
+      font-weight: bold;
+      word-break: break-word;
+    }
+
+    .proxy {
+      margin-top: 14px;
+      padding: 16px;
+      border-radius: 14px;
+      background: #121c2e;
+      border: 1px solid #26344b;
+    }
+
+    .footer {
+      text-align: center;
+      color: #64748b;
+      font-size: 12px;
+      margin-top: 35px;
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 15px 12px;
+      }
+
+      h1 {
+        font-size: 32px;
+      }
+
+      .search-box {
+        flex-direction: column;
+      }
+
+      button {
+        height: 50px;
+      }
+
+      .cards {
+        grid-template-columns: 1fr;
+      }
+
+      .ip-value {
+        font-size: 25px;
+      }
+    }
+  </style>
 </head>
+
 <body>
-  <h1>GeoLens</h1>
-  <p>IP2Location Smart Geolocator</p>
 
-  <input id="ip" placeholder="Enter IP address">
-  <button onclick="lookup()">Lookup</button>
+  <div class="container">
 
-  <pre id="result"></pre>
+    <div class="header">
+      <div class="logo">🌐</div>
+      <h1>GeoLens</h1>
+      <p class="subtitle">IP2Location Smart Geolocator</p>
+    </div>
+
+    <div class="search-box">
+      <input
+        id="ip"
+        type="text"
+        placeholder="Enter IP address e.g. 8.8.8.8"
+        autocomplete="off"
+      >
+
+      <button onclick="lookup()">Lookup</button>
+    </div>
+
+    <div id="status"></div>
+
+    <div id="dashboard" class="dashboard">
+
+      <div class="ip-card">
+        <div class="ip-label">IP Address</div>
+        <div id="ipValue" class="ip-value">—</div>
+      </div>
+
+      <div class="cards">
+
+        <div class="card">
+          <div class="card-title">🌍 Country</div>
+          <div id="country" class="card-value">—</div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">🏳️ Country Code</div>
+          <div id="countryCode" class="card-value">—</div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">📍 Region</div>
+          <div id="region" class="card-value">—</div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">🏙️ City</div>
+          <div id="city" class="card-value">—</div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">📮 ZIP Code</div>
+          <div id="zip" class="card-value">—</div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">🕐 Time Zone</div>
+          <div id="timezone" class="card-value">—</div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">📡 ASN</div>
+          <div id="asn" class="card-value">—</div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">🏢 ISP / AS</div>
+          <div id="as" class="card-value">—</div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">🧭 Latitude</div>
+          <div id="latitude" class="card-value">—</div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">🧭 Longitude</div>
+          <div id="longitude" class="card-value">—</div>
+        </div>
+
+      </div>
+
+      <div class="proxy">
+        🛡️ <strong>Proxy Status:</strong>
+        <span id="proxy">—</span>
+      </div>
+
+    </div>
+
+    <div class="footer">
+      GeoLens • IP Geolocation Dashboard
+    </div>
+
+  </div>
 
   <script>
     async function lookup() {
-      const ip = document.getElementById("ip").value;
-      const result = document.getElementById("result");
 
-      result.textContent = "Loading...";
+      const ip = document.getElementById("ip").value.trim();
+      const status = document.getElementById("status");
+      const dashboard = document.getElementById("dashboard");
+
+      if (!ip) {
+        status.textContent = "Please enter an IP address.";
+        dashboard.style.display = "none";
+        return;
+      }
+
+      status.textContent = "🔎 Looking up IP address...";
+      dashboard.style.display = "none";
 
       try {
+
         const response = await fetch(
           "/api/lookup?ip=" + encodeURIComponent(ip)
         );
 
+        if (!response.ok) {
+          throw new Error("Server returned " + response.status);
+        }
+
         const data = await response.json();
-        result.textContent = JSON.stringify(data, null, 2);
+
+        document.getElementById("ipValue").textContent =
+          data.ip || "—";
+
+        document.getElementById("country").textContent =
+          data.country_name || "—";
+
+        document.getElementById("countryCode").textContent =
+          data.country_code || "—";
+
+        document.getElementById("region").textContent =
+          data.region_name || "—";
+
+        document.getElementById("city").textContent =
+          data.city_name || "—";
+
+        document.getElementById("zip").textContent =
+          data.zip_code || "—";
+
+        document.getElementById("timezone").textContent =
+          data.time_zone || "—";
+
+        document.getElementById("asn").textContent =
+          data.asn || "—";
+
+        document.getElementById("as").textContent =
+          data.as || "—";
+
+        document.getElementById("latitude").textContent =
+          data.latitude ?? "—";
+
+        document.getElementById("longitude").textContent =
+          data.longitude ?? "—";
+
+        document.getElementById("proxy").textContent =
+          data.is_proxy ? "Yes" : "No";
+
+        status.textContent = "✅ Lookup completed successfully.";
+
+        dashboard.style.display = "block";
+
       } catch (error) {
-        result.textContent = "Error: " + error.message;
+
+        dashboard.style.display = "none";
+
+        status.textContent =
+          "❌ Error: " + error.message;
       }
     }
+
+    document.getElementById("ip").addEventListener("keydown", function(event) {
+      if (event.key === "Enter") {
+        lookup();
+      }
+    });
   </script>
+
 </body>
-</html>
+          </html></html>
