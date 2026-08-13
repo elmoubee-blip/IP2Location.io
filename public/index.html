@@ -13,108 +13,127 @@
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background:
-    radial-gradient(circle at top, #12345a 0%, #081426 45%, #050b14 100%);
   color: #fff;
   min-height: 100vh;
+  background:
+    radial-gradient(circle at top, #123b65 0%, #0a1a2d 45%, #050b14 100%);
 }
 
 .container {
-  width: 100%;
   max-width: 900px;
   margin: auto;
-  padding: 35px 18px 50px;
+  padding: 30px 16px 50px;
 }
 
 header {
   text-align: center;
-  margin-bottom: 30px;
+  margin-bottom: 28px;
 }
 
 .logo {
   font-size: 42px;
   font-weight: 800;
-  letter-spacing: 1px;
 }
 
 .subtitle {
-  color: #9fb1c9;
-  font-size: 17px;
   margin-top: 8px;
+  color: #9eb1c9;
+  font-size: 17px;
 }
 
 .card {
-  background: rgba(25, 43, 67, 0.82);
-  border: 1px solid rgba(130, 170, 210, 0.25);
+  background: rgba(24, 43, 68, .88);
+  border: 1px solid rgba(130,170,210,.25);
   border-radius: 28px;
-  padding: 28px;
+  padding: 24px;
   box-shadow: 0 20px 60px rgba(0,0,0,.35);
   backdrop-filter: blur(12px);
 }
 
-.search-box {
+.search {
   display: flex;
   gap: 12px;
 }
 
 input {
   flex: 1;
-  padding: 19px;
-  border-radius: 18px;
-  border: 1px solid #3d536e;
-  background: #081323;
-  color: white;
+  min-width: 0;
+  padding: 18px;
+  border-radius: 17px;
+  border: 1px solid #405671;
+  background: #071322;
+  color: #fff;
   font-size: 18px;
   outline: none;
 }
 
 input:focus {
-  border-color: #19bfff;
+  border-color: #16c5ff;
 }
 
 button {
-  border: none;
-  border-radius: 18px;
-  padding: 0 28px;
-  background: linear-gradient(135deg, #00c6ff, #4169ff);
+  border: 0;
+  border-radius: 17px;
+  padding: 0 25px;
+  min-height: 58px;
+  background: linear-gradient(135deg,#00c6ff,#4169ff);
   color: white;
-  font-size: 18px;
+  font-size: 17px;
   font-weight: bold;
   cursor: pointer;
-  min-height: 58px;
 }
 
 button:active {
   transform: scale(.98);
 }
 
-.example {
-  color: #8195b0;
-  margin: 16px 2px 30px;
+.try {
+  color: #8296b1;
+  margin: 15px 2px 28px;
 }
 
-.status {
+.loading {
+  display: none;
+  text-align: center;
+  padding: 20px;
+  color: #9db1ca;
+}
+
+.error {
+  display: none;
+  background: rgba(255,70,70,.13);
+  color: #ff8c8c;
+  border-radius: 15px;
+  padding: 15px;
+  margin-bottom: 20px;
+}
+
+.result {
+  display: none;
+}
+
+.title-row {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
   margin-bottom: 18px;
 }
 
-.status h2 {
+.title-row h2 {
   margin: 0;
 }
 
 .badge {
-  background: rgba(0, 220, 150, .15);
-  color: #45e7a6;
-  padding: 10px 15px;
+  padding: 9px 15px;
   border-radius: 30px;
+  background: rgba(0,220,150,.14);
+  color: #46e8a5;
   font-weight: bold;
 }
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2,1fr);
   gap: 14px;
 }
 
@@ -122,83 +141,121 @@ button:active {
   background: rgba(255,255,255,.055);
   border: 1px solid rgba(255,255,255,.08);
   border-radius: 20px;
-  padding: 20px;
-  min-height: 100px;
+  padding: 19px;
 }
 
 .label {
-  color: #8ea2bd;
-  font-size: 13px;
+  color: #8fa4bf;
+  font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 1px;
-  margin-bottom: 10px;
+  margin-bottom: 9px;
 }
 
 .value {
-  font-size: 19px;
+  font-size: 18px;
   font-weight: bold;
   word-break: break-word;
 }
 
-.map {
+.copy-btn {
+  margin-top: 12px;
+  min-height: 36px;
+  padding: 0 14px;
+  font-size: 13px;
+  border-radius: 10px;
+  background: #263e5c;
+}
+
+.security {
+  margin-top: 16px;
+  padding: 20px;
+  border-radius: 20px;
+  background: rgba(255,255,255,.055);
+  border: 1px solid rgba(255,255,255,.08);
+}
+
+.security-title {
+  color: #8fa4bf;
+  font-size: 12px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.safe {
+  color: #45e5a2;
+  font-weight: bold;
+}
+
+.warning {
+  color: #ffc857;
+  font-weight: bold;
+}
+
+.map-container {
   margin-top: 18px;
   border-radius: 20px;
   overflow: hidden;
-  display: none;
+  border: 1px solid rgba(255,255,255,.1);
 }
 
-.map iframe {
+.map-container iframe {
+  display: block;
   width: 100%;
-  height: 280px;
+  height: 300px;
   border: 0;
 }
 
-.loading {
-  text-align: center;
-  color: #9db0c8;
-  padding: 25px;
+.map-title {
+  padding: 14px 16px;
+  background: #162a43;
+  font-weight: bold;
 }
 
-.error {
-  background: rgba(255,70,70,.12);
-  color: #ff8585;
-  padding: 15px;
-  border-radius: 15px;
-  margin-top: 20px;
-  display: none;
+.coordinates {
+  display: flex;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.coordinates button {
+  flex: 1;
+  min-height: 45px;
+  font-size: 14px;
+  background: #263e5c;
 }
 
 .footer {
   text-align: center;
-  color: #657a95;
-  margin-top: 25px;
+  color: #667d99;
+  margin-top: 24px;
   font-size: 13px;
 }
 
-@media (max-width: 650px) {
-  .container {
-    padding: 25px 14px;
-  }
+@media(max-width:650px) {
 
   .logo {
     font-size: 36px;
   }
 
   .card {
-    padding: 20px;
-    border-radius: 24px;
+    padding: 19px;
   }
 
-  .search-box {
+  .search {
     flex-direction: column;
   }
 
-  button {
+  .search button {
     width: 100%;
   }
 
   .grid {
     grid-template-columns: 1fr;
+  }
+
+  .coordinates {
+    flex-direction: column;
   }
 }
 </style>
@@ -215,83 +272,262 @@ button:active {
 
 <div class="card">
 
-  <div class="search-box">
-    <input
-      id="ip"
-      type="text"
-      placeholder="Enter IP address"
-      value="8.8.8.8"
-    >
-    <button onclick="lookup()">Lookup</button>
-  </div>
+<div class="search">
+  <input id="ip" value="8.8.8.8" placeholder="Enter IP address">
+  <button onclick="lookup()">Lookup</button>
+</div>
 
-  <div class="example">
-    Try: 8.8.8.8
-  </div>
+<div class="try">Try: 8.8.8.8</div>
 
-  <div id="loading" class="loading" style="display:none;">
-    🔍 Searching IP information...
-  </div>
+<div id="loading" class="loading">
+  🔍 Searching IP information...
+</div>
 
-  <div id="error" class="error"></div>
+<div id="error" class="error"></div>
 
-  <div id="resultArea" style="display:none;">
+<div id="result" class="result">
 
-    <div class="status">
-      <h2>IP Information</h2>
-      <div class="badge">● Found</div>
-    </div>
+<div class="title-row">
+  <h2>IP Information</h2>
+  <div class="badge">● Found</div>
+</div>
 
-    <div class="grid">
+<div class="grid">
 
-      <div class="info">
-        <div class="label">IP Address</div>
-        <div class="value" id="ipValue">-</div>
-      </div>
+<div class="info">
+  <div class="label">IP Address</div>
+  <div class="value" id="ipValue">-</div>
+  <button class="copy-btn" onclick="copyText('ipValue')">📋 Copy IP</button>
+</div>
 
-      <div class="info">
-        <div class="label">Country</div>
-        <div class="value" id="country">-</div>
-      </div>
+<div class="info">
+  <div class="label">Country</div>
+  <div class="value" id="country">-</div>
+</div>
 
-      <div class="info">
-        <div class="label">Region</div>
-        <div class="value" id="region">-</div>
-      </div>
+<div class="info">
+  <div class="label">Region</div>
+  <div class="value" id="region">-</div>
+</div>
 
-      <div class="info">
-        <div class="label">City</div>
-        <div class="value" id="city">-</div>
-      </div>
+<div class="info">
+  <div class="label">City</div>
+  <div class="value" id="city">-</div>
+</div>
 
-      <div class="info">
-        <div class="label">ZIP Code</div>
-        <div class="value" id="zip">-</div>
-      </div>
+<div class="info">
+  <div class="label">ZIP Code</div>
+  <div class="value" id="zip">-</div>
+</div>
 
-      <div class="info">
-        <div class="label">Time Zone</div>
-        <div class="value" id="timezone">-</div>
-      </div>
+<div class="info">
+  <div class="label">Time Zone</div>
+  <div class="value" id="timezone">-</div>
+</div>
 
-      <div class="info">
-        <div class="label">Latitude</div>
-        <div class="value" id="latitude">-</div>
-      </div>
+<div class="info">
+  <div class="label">Latitude</div>
+  <div class="value" id="latitude">-</div>
+</div>
 
-      <div class="info">
-        <div class="label">Longitude</div>
-        <div class="value" id="longitude">-</div>
-      </div>
+<div class="info">
+  <div class="label">Longitude</div>
+  <div class="value" id="longitude">-</div>
+</div>
 
-      <div class="info">
-        <div class="label">ASN</div>
-        <div class="value" id="asn">-</div>
-      </div>
+<div class="info">
+  <div class="label">ASN</div>
+  <div class="value" id="asn">-</div>
+</div>
 
-      <div class="info">
-        <div class="label">Network / ISP</div>
-        <div class="value" id="as">-</div>
-      </div>
+<div class="info">
+  <div class="label">ISP / Network</div>
+  <div class="value" id="isp">-</div>
+</div>
 
-      <
+</div>
+
+<div class="security">
+  <div class="security-title">Security / Proxy Check</div>
+  <div id="proxyStatus">Checking...</div>
+</div>
+
+<div class="coordinates">
+  <button onclick="copyCoordinates()">📋 Copy Coordinates</button>
+  <button onclick="copyLocation()">📍 Copy Location</button>
+</div>
+
+<div class="map-container">
+
+<div class="map-title">
+  🗺️ Approximate IP Location
+</div>
+
+<iframe id="map" loading="lazy"></iframe>
+
+</div>
+
+</div>
+</div>
+
+<div class="footer">
+  GeoLens • IP Intelligence Dashboard
+</div>
+
+</div>
+
+<script>
+
+async function lookup() {
+
+  const ip = document.getElementById("ip").value.trim();
+
+  const loading = document.getElementById("loading");
+  const result = document.getElementById("result");
+  const error = document.getElementById("error");
+
+  if (!ip) {
+    error.textContent = "Please enter an IP address.";
+    error.style.display = "block";
+    result.style.display = "none";
+    return;
+  }
+
+  loading.style.display = "block";
+  error.style.display = "none";
+  result.style.display = "none";
+
+  try {
+
+    const response = await fetch(
+      "/api/lookup?ip=" + encodeURIComponent(ip)
+    );
+
+    if (!response.ok) {
+      throw new Error("Lookup request failed.");
+    }
+
+    const data = await response.json();
+
+    if (!data.ip) {
+      throw new Error(data.message || "No IP information found.");
+    }
+
+    document.getElementById("ipValue").textContent =
+      data.ip || "-";
+
+    document.getElementById("country").textContent =
+      (data.country_name || "-") +
+      (data.country_code ? " (" + data.country_code + ")" : "");
+
+    document.getElementById("region").textContent =
+      data.region_name || "-";
+
+    document.getElementById("city").textContent =
+      data.city_name || "-";
+
+    document.getElementById("zip").textContent =
+      data.zip_code || "-";
+
+    document.getElementById("timezone").textContent =
+      data.time_zone || "-";
+
+    document.getElementById("latitude").textContent =
+      data.latitude ?? "-";
+
+    document.getElementById("longitude").textContent =
+      data.longitude ?? "-";
+
+    document.getElementById("asn").textContent =
+      data.asn ? "AS" + data.asn : "-";
+
+    document.getElementById("isp").textContent =
+      data.as || "-";
+
+    const proxy = document.getElementById("proxyStatus");
+
+    if (data.is_proxy === true) {
+      proxy.innerHTML =
+        "⚠️ <span class='warning'>Proxy/VPN detected</span>";
+    } else {
+      proxy.innerHTML =
+        "✓ <span class='safe'>No proxy detected</span>";
+    }
+
+    if (data.latitude && data.longitude) {
+
+      const lat = Number(data.latitude);
+      const lon = Number(data.longitude);
+
+      const bbox =
+        (lon - 0.08) + "%2C" +
+        (lat - 0.05) + "%2C" +
+        (lon + 0.08) + "%2C" +
+        (lat + 0.05);
+
+      document.getElementById("map").src =
+        "https://www.openstreetmap.org/export/embed.html?bbox=" +
+        bbox +
+        "&layer=mapnik&marker=" +
+        lat + "%2C" + lon;
+    }
+
+    result.style.display = "block";
+
+  } catch (e) {
+
+    error.textContent = "Error: " + e.message;
+    error.style.display = "block";
+
+  } finally {
+
+    loading.style.display = "none";
+  }
+}
+
+function copyText(id) {
+
+  const text = document.getElementById(id).textContent;
+
+  navigator.clipboard.writeText(text)
+    .then(() => alert("Copied: " + text))
+    .catch(() => alert("Copy failed"));
+}
+
+function copyCoordinates() {
+
+  const lat = document.getElementById("latitude").textContent;
+  const lon = document.getElementById("longitude").textContent;
+
+  const text = lat + ", " + lon;
+
+  navigator.clipboard.writeText(text)
+    .then(() => alert("Coordinates copied!"));
+}
+
+function copyLocation() {
+
+  const city = document.getElementById("city").textContent;
+  const region = document.getElementById("region").textContent;
+  const country = document.getElementById("country").textContent;
+
+  const text = city + ", " + region + ", " + country;
+
+  navigator.clipboard.writeText(text)
+    .then(() => alert("Location copied!"));
+}
+
+document.getElementById("ip").addEventListener("keydown", function(e) {
+
+  if (e.key === "Enter") {
+    lookup();
+  }
+
+});
+
+lookup();
+
+</script>
+
+</body>
+</html>
