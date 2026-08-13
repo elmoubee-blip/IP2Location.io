@@ -3,8 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>GeoLens - IP Geolocator</title>
+  <title>GeoLens — IP Intelligence</title>
 
   <style>
     * {
@@ -16,9 +15,11 @@
     body {
       font-family: Arial, sans-serif;
       min-height: 100vh;
-      background: #0b1220;
+      background:
+        radial-gradient(circle at top left, #173b63 0, transparent 35%),
+        linear-gradient(135deg, #07111f, #0d1728 55%, #101d32);
       color: #fff;
-      padding: 25px 15px;
+      padding: 25px 16px;
     }
 
     .container {
@@ -36,138 +37,179 @@
       width: 70px;
       height: 70px;
       margin: auto;
-      border-radius: 20px;
+      border-radius: 22px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 34px;
-      background: linear-gradient(135deg, #00d4ff, #0066ff);
-      box-shadow: 0 10px 35px rgba(0, 153, 255, 0.35);
+      font-size: 32px;
+      font-weight: bold;
+      background: linear-gradient(135deg, #00d4ff, #4263ff);
+      box-shadow: 0 15px 40px rgba(0, 212, 255, .25);
     }
 
     h1 {
       margin-top: 18px;
       font-size: 38px;
-      letter-spacing: 1px;
+      letter-spacing: -1px;
     }
 
     .subtitle {
-      color: #9ca9bd;
+      color: #9eacc0;
       margin-top: 8px;
       font-size: 15px;
     }
 
-    .search-box {
-      background: #121c2e;
-      padding: 18px;
-      border-radius: 18px;
-      border: 1px solid #26344b;
+    .search-card {
+      background: rgba(255,255,255,.07);
+      border: 1px solid rgba(255,255,255,.12);
+      backdrop-filter: blur(15px);
+      padding: 22px;
+      border-radius: 20px;
+      box-shadow: 0 20px 50px rgba(0,0,0,.25);
+    }
+
+    .search-row {
       display: flex;
       gap: 10px;
-      margin-bottom: 25px;
     }
 
-    #ip {
+    input {
       flex: 1;
       min-width: 0;
-      padding: 15px;
+      padding: 16px;
       border-radius: 12px;
-      border: 1px solid #34445e;
-      background: #0b1220;
+      border: 1px solid #34445a;
+      outline: none;
+      background: #0b1525;
       color: white;
       font-size: 16px;
-      outline: none;
     }
 
-    #ip:focus {
-      border-color: #00bfff;
+    input:focus {
+      border-color: #00d4ff;
+      box-shadow: 0 0 0 3px rgba(0,212,255,.1);
     }
 
     button {
       border: none;
-      padding: 0 23px;
+      padding: 0 25px;
       border-radius: 12px;
-      background: linear-gradient(135deg, #00bfff, #0066ff);
+      background: linear-gradient(135deg, #00c6ff, #4263ff);
       color: white;
       font-size: 16px;
       font-weight: bold;
       cursor: pointer;
+      transition: .2s;
     }
 
-    button:active {
-      transform: scale(0.97);
+    button:hover {
+      transform: translateY(-2px);
     }
 
-    #status {
-      text-align: center;
-      color: #9ca9bd;
-      margin: 15px 0;
+    .examples {
+      color: #8291a6;
+      font-size: 13px;
+      margin-top: 12px;
     }
 
-    .dashboard {
+    .result {
+      margin-top: 22px;
       display: none;
     }
 
-    .ip-card {
-      background: linear-gradient(135deg, #14243c, #101a2c);
-      border: 1px solid #2c405d;
+    .result.show {
+      display: block;
+    }
+
+    .result-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+
+    .result-header h2 {
+      font-size: 20px;
+    }
+
+    .status {
+      font-size: 12px;
+      padding: 7px 10px;
       border-radius: 20px;
-      padding: 25px;
-      margin-bottom: 18px;
+      background: rgba(0, 220, 140, .12);
+      color: #45e6a1;
     }
 
-    .ip-label {
-      color: #8fa1bb;
-      font-size: 13px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-
-    .ip-value {
-      font-size: 30px;
-      font-weight: bold;
-      margin-top: 8px;
-      word-break: break-word;
-    }
-
-    .cards {
+    .grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 14px;
+      gap: 12px;
     }
 
-    .card {
-      background: #121c2e;
-      border: 1px solid #26344b;
-      border-radius: 16px;
-      padding: 18px;
+    .item {
+      background: rgba(255,255,255,.055);
+      border: 1px solid rgba(255,255,255,.08);
+      padding: 17px;
+      border-radius: 15px;
     }
 
-    .card-title {
-      color: #8fa1bb;
-      font-size: 13px;
-      margin-bottom: 9px;
+    .label {
+      color: #8190a5;
+      font-size: 12px;
+      margin-bottom: 7px;
+      text-transform: uppercase;
+      letter-spacing: .6px;
     }
 
-    .card-value {
-      font-size: 17px;
-      font-weight: bold;
+    .value {
+      font-size: 16px;
+      font-weight: 600;
       word-break: break-word;
     }
 
-    .proxy {
-      margin-top: 14px;
-      padding: 16px;
-      border-radius: 14px;
-      background: #121c2e;
-      border: 1px solid #26344b;
+    .ip-main {
+      grid-column: span 2;
+      background: linear-gradient(
+        135deg,
+        rgba(0,212,255,.12),
+        rgba(66,99,255,.12)
+      );
+    }
+
+    .ip-main .value {
+      font-size: 25px;
+    }
+
+    .copy-btn {
+      margin-top: 15px;
+      width: 100%;
+      padding: 13px;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.12);
+    }
+
+    .loading {
+      text-align: center;
+      padding: 30px;
+      color: #aebacd;
+    }
+
+    .error {
+      margin-top: 20px;
+      padding: 15px;
+      border-radius: 12px;
+      background: rgba(255,70,70,.1);
+      border: 1px solid rgba(255,70,70,.2);
+      color: #ff9292;
+      display: none;
     }
 
     .footer {
       text-align: center;
-      color: #64748b;
-      font-size: 12px;
       margin-top: 35px;
+      color: #68788e;
+      font-size: 12px;
+      line-height: 1.6;
     }
 
     @media (max-width: 600px) {
@@ -179,20 +221,20 @@
         font-size: 32px;
       }
 
-      .search-box {
+      .search-row {
         flex-direction: column;
       }
 
       button {
-        height: 50px;
+        height: 52px;
       }
 
-      .cards {
+      .grid {
         grid-template-columns: 1fr;
       }
 
-      .ip-value {
-        font-size: 25px;
+      .ip-main {
+        grid-column: span 1;
       }
     }
   </style>
@@ -203,113 +245,134 @@
   <div class="container">
 
     <div class="header">
-      <div class="logo">🌐</div>
+      <div class="logo">GL</div>
       <h1>GeoLens</h1>
-      <p class="subtitle">IP2Location Smart Geolocator</p>
+      <p class="subtitle">
+        Smart IP Intelligence & Geolocation
+      </p>
     </div>
 
-    <div class="search-box">
-      <input
-        id="ip"
-        type="text"
-        placeholder="Enter IP address e.g. 8.8.8.8"
-        autocomplete="off"
-      >
+    <div class="search-card">
 
-      <button onclick="lookup()">Lookup</button>
-    </div>
+      <div class="search-row">
+        <input
+          id="ip"
+          type="text"
+          placeholder="Enter IP address e.g. 8.8.8.8"
+          autocomplete="off"
+        >
 
-    <div id="status"></div>
-
-    <div id="dashboard" class="dashboard">
-
-      <div class="ip-card">
-        <div class="ip-label">IP Address</div>
-        <div id="ipValue" class="ip-value">—</div>
+        <button onclick="lookup()">Lookup</button>
       </div>
 
-      <div class="cards">
-
-        <div class="card">
-          <div class="card-title">🌍 Country</div>
-          <div id="country" class="card-value">—</div>
-        </div>
-
-        <div class="card">
-          <div class="card-title">🏳️ Country Code</div>
-          <div id="countryCode" class="card-value">—</div>
-        </div>
-
-        <div class="card">
-          <div class="card-title">📍 Region</div>
-          <div id="region" class="card-value">—</div>
-        </div>
-
-        <div class="card">
-          <div class="card-title">🏙️ City</div>
-          <div id="city" class="card-value">—</div>
-        </div>
-
-        <div class="card">
-          <div class="card-title">📮 ZIP Code</div>
-          <div id="zip" class="card-value">—</div>
-        </div>
-
-        <div class="card">
-          <div class="card-title">🕐 Time Zone</div>
-          <div id="timezone" class="card-value">—</div>
-        </div>
-
-        <div class="card">
-          <div class="card-title">📡 ASN</div>
-          <div id="asn" class="card-value">—</div>
-        </div>
-
-        <div class="card">
-          <div class="card-title">🏢 ISP / AS</div>
-          <div id="as" class="card-value">—</div>
-        </div>
-
-        <div class="card">
-          <div class="card-title">🧭 Latitude</div>
-          <div id="latitude" class="card-value">—</div>
-        </div>
-
-        <div class="card">
-          <div class="card-title">🧭 Longitude</div>
-          <div id="longitude" class="card-value">—</div>
-        </div>
-
+      <div class="examples">
+        Try: 8.8.8.8
       </div>
 
-      <div class="proxy">
-        🛡️ <strong>Proxy Status:</strong>
-        <span id="proxy">—</span>
+      <div id="error" class="error"></div>
+
+      <div id="result" class="result">
+
+        <div class="result-header">
+          <h2>IP Information</h2>
+          <span class="status">● Found</span>
+        </div>
+
+        <div class="grid">
+
+          <div class="item ip-main">
+            <div class="label">IP Address</div>
+            <div id="r-ip" class="value">—</div>
+          </div>
+
+          <div class="item">
+            <div class="label">Country</div>
+            <div id="country" class="value">—</div>
+          </div>
+
+          <div class="item">
+            <div class="label">Region</div>
+            <div id="region" class="value">—</div>
+          </div>
+
+          <div class="item">
+            <div class="label">City</div>
+            <div id="city" class="value">—</div>
+          </div>
+
+          <div class="item">
+            <div class="label">ZIP Code</div>
+            <div id="zip" class="value">—</div>
+          </div>
+
+          <div class="item">
+            <div class="label">Latitude</div>
+            <div id="lat" class="value">—</div>
+          </div>
+
+          <div class="item">
+            <div class="label">Longitude</div>
+            <div id="lon" class="value">—</div>
+          </div>
+
+          <div class="item">
+            <div class="label">Time Zone</div>
+            <div id="timezone" class="value">—</div>
+          </div>
+
+          <div class="item">
+            <div class="label">ASN</div>
+            <div id="asn" class="value">—</div>
+          </div>
+
+          <div class="item">
+            <div class="label">Network / ISP</div>
+            <div id="as" class="value">—</div>
+          </div>
+
+          <div class="item">
+            <div class="label">Proxy</div>
+            <div id="proxy" class="value">—</div>
+          </div>
+
+        </div>
+
+        <button class="copy-btn" onclick="copyResult()">
+          Copy IP Information
+        </button>
+
       </div>
 
     </div>
 
     <div class="footer">
-      GeoLens • IP Geolocation Dashboard
+      GeoLens uses IP-based geolocation data.<br>
+      Results are approximate and should not be treated as an exact physical location.
     </div>
 
   </div>
 
   <script>
+
+    let latestData = null;
+
     async function lookup() {
 
       const ip = document.getElementById("ip").value.trim();
-      const status = document.getElementById("status");
-      const dashboard = document.getElementById("dashboard");
+      const result = document.getElementById("result");
+      const error = document.getElementById("error");
+
+      error.style.display = "none";
 
       if (!ip) {
-        status.textContent = "Please enter an IP address.";
-        dashboard.style.display = "none";
+        error.textContent = "Please enter an IP address.";
+        error.style.display = "block";
         return;
       }
 
-      status.textContent = "🔎 Looking up IP address...";
-      dashboard.style.display = "none";
+      result.classList.add("show");
+
+      document.getElementById("r-ip").textContent = "Loading...";
 
       try {
 
@@ -318,19 +381,20 @@
         );
 
         if (!response.ok) {
-          throw new Error("Server returned " + response.status);
+          throw new Error("Lookup request failed.");
         }
 
         const data = await response.json();
 
-        document.getElementById("ipValue").textContent =
+        latestData = data;
+
+        document.getElementById("r-ip").textContent =
           data.ip || "—";
 
         document.getElementById("country").textContent =
-          data.country_name || "—";
-
-        document.getElementById("countryCode").textContent =
-          data.country_code || "—";
+          data.country_name
+            ? `${data.country_name} (${data.country_code || ""})`
+            : "—";
 
         document.getElementById("region").textContent =
           data.region_name || "—";
@@ -341,6 +405,12 @@
         document.getElementById("zip").textContent =
           data.zip_code || "—";
 
+        document.getElementById("lat").textContent =
+          data.latitude ?? "—";
+
+        document.getElementById("lon").textContent =
+          data.longitude ?? "—";
+
         document.getElementById("timezone").textContent =
           data.time_zone || "—";
 
@@ -350,34 +420,53 @@
         document.getElementById("as").textContent =
           data.as || "—";
 
-        document.getElementById("latitude").textContent =
-          data.latitude ?? "—";
-
-        document.getElementById("longitude").textContent =
-          data.longitude ?? "—";
-
         document.getElementById("proxy").textContent =
           data.is_proxy ? "Yes" : "No";
 
-        status.textContent = "✅ Lookup completed successfully.";
+      } catch (err) {
 
-        dashboard.style.display = "block";
+        result.classList.remove("show");
 
-      } catch (error) {
+        error.textContent =
+          "Unable to complete lookup: " + err.message;
 
-        dashboard.style.display = "none";
-
-        status.textContent =
-          "❌ Error: " + error.message;
+        error.style.display = "block";
       }
     }
 
-    document.getElementById("ip").addEventListener("keydown", function(event) {
-      if (event.key === "Enter") {
-        lookup();
+    async function copyResult() {
+
+      if (!latestData) return;
+
+      const text = JSON.stringify(latestData, null, 2);
+
+      try {
+        await navigator.clipboard.writeText(text);
+
+        const btn = document.querySelector(".copy-btn");
+        const oldText = btn.textContent;
+
+        btn.textContent = "✓ Copied";
+
+        setTimeout(() => {
+          btn.textContent = oldText;
+        }, 1500);
+
+      } catch (err) {
+        alert("Copy failed.");
       }
-    });
+    }
+
+    document.getElementById("ip").addEventListener(
+      "keydown",
+      function(event) {
+        if (event.key === "Enter") {
+          lookup();
+        }
+      }
+    );
+
   </script>
 
 </body>
-          </html></html>
+  </html>
